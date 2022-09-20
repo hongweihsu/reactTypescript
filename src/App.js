@@ -10,6 +10,8 @@ class App extends Component {
     this.state = {
       monsters: [],
       searchField: '',
+      emailSearchField: '',
+      searchType: '',
     };
   }
   componentDidMount() {
@@ -20,26 +22,58 @@ class App extends Component {
         }));
   }
 
-  onSearchChange = (event) => {
-    const searchField = event.target.value.toLocaleLowerCase();
+  onTypeChange = (event) => {
+    let searchType =  document.querySelector('input[name="searchType"]:checked').value
+    console.log('ss', searchType)
     this.setState(()=> {
-      return {searchField};
+      return {searchType};
     });
+  }
+
+  onSearchChange = (event) => {
+    if (this.state.searchType === 'name' || this.state.searchType === '') {
+      const searchField = event.target.value.toLocaleLowerCase();
+      this.setState(() => {
+        return {searchField};
+      });
+    }
+  };
+
+  onEmailSearchChange = (event) => {
+    if (this.state.searchType === 'email') {
+      const emailSearchField = event.target.value.toLocaleLowerCase();
+      this.setState(() => {
+        return {emailSearchField};
+      });
+    }
   };
 
   render(){
-    const {monsters, searchField} = this.state;
-    const {onSearchChange} = this;
+    const {monsters, searchField, emailSearchField, searchType} = this.state;
+    const {onSearchChange, onEmailSearchChange, onTypeChange} = this;
     const filteredMonsters = monsters.filter((monster) => {
-      return monster.name.toLocaleLowerCase().includes(searchField);
+      if (searchType === 'name' || searchType === ''){
+        return monster.name.toLocaleLowerCase().includes(searchField);
+      }else if (searchType === 'email'){
+        return monster.email.toLocaleLowerCase().includes(emailSearchField);
+      }
     })
-
+    console.log('fm', filteredMonsters)
     return(
         <div className='App'>
-          <h1 className='app-title'>Monsters Rolodex</h1>
+          <h1 className='app-title'>Hello Friends</h1>
+          <div className='search-container'>
+            <div className='search-item'>
+              <input type="radio" id="byName" name="searchType" value="name" onClick={onTypeChange}/>
+              <SearchBox className='name-search-box' onChange = {onSearchChange}></SearchBox>
+            </div>
+            <div className='search-item'>
+              <input type="radio" id="byEmail" name="searchType" value="email" onClick={onTypeChange}/>
+              <SearchBox className='email-search-box' onChange = {onEmailSearchChange}></SearchBox>
+            </div>
+          </div>
 
-          <SearchBox className='monsters-search-box' onChange = {onSearchChange}></SearchBox>
-          <CardList monsters={filteredMonsters}></CardList>
+          <CardList monsters={filteredMonsters} ></CardList>
         </div>
     );
   }

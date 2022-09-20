@@ -1,10 +1,9 @@
 .card-container {
-    display: flex;
-    flex-direction: column;
+    width: 225px;
     background-color: #95dada;
     border: 1px solid grey;
     border-radius: 5px;
-    padding: 25px;
+    padding: 15px;
     cursor: pointer;
     -moz-osx-font-smoothing: grayscale;
     backface-visibility: hidden;
@@ -12,6 +11,112 @@
     transition: transform 0.25s ease-out;
 }
 
-.card-container:hover {
+.detail-container {
+    width: 500px;
+    background-color: #95dada;
+    border-radius: 5px;
+    padding: 15px;
+    cursor: pointer;
+    -moz-osx-font-smoothing: grayscale;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+    transition: transform 0.25s ease-out;
+}
+
+.round-border {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    border: 1px solid grey;
+    border-radius: 5px;
+}
+
+.card-content{
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid gray;
+    border-radius: 5px;
+}
+
+.text-info {
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+    margin: 20px auto;
+}
+
+.text-info p,
+.text-info h2{
+    margin: 0;
+}
+
+.detail-card-content{
+    width: 225px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    margin: auto;
+}
+
+.detail-additional-content{
+    text-align: left;
+    margin: auto;
+}
+
+.card-container img,
+.detail-container img{
+    width: 150px;
+    margin: auto;
+}
+
+.card-container:hover,
+.detail-container:hover{
     transform: scale(1.05);
+}
+
+@media only screen and (max-width: 600px) {
+    .card-container,
+    .detail-container{
+        margin: auto;
+        width: 85vw;
+    }
+
+    .card-content {
+        display: grid;
+        grid-template-columns: 1fr 1.5fr ;
+        grid-gap: 2px;
+        align-items: center;
+        justify-items: center;
+    }
+}
+
+
+@media only screen and (min-width: 600px) and (max-width: 900px) {
+    .card-container {
+        margin: auto;
+        width: 40%;
+    }
+
+    .detail-container{
+        margin: auto;
+        width: 91%;
+    }
+}
+
+@media only screen and (min-width: 900px) and (max-width: 1150px) {
+    .card-container {
+        /*margin: auto;*/
+        width: 28%;
+    }
+
+    .detail-container{
+        /*margin: auto;*/
+        width: 61%;
+    }
 }

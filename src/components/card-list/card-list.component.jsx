@@ -4,16 +4,15 @@ import Card from "../card/card.component";
 
 class CardList extends Component {
     render(){
-        console.log('render');
         const {monsters} = this.props;
         return(
             <div className='card-list'>
-                {monsters.map((monster) => {
+                {monsters.map((monster, i) => {
                     // here can declare, but need to use '{}' + 'return'
                     return (
-                    <div key={monster.id} className='card-container'>
-                        <Card monster={monster}></Card>
-                    </div>
+                    // <div key={i} className='card-container'>
+                        <Card key={i} monster={monster}></Card>
+                    // </div>
                     )})}
             </div>
         );

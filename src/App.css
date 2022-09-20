@@ -21,3 +21,27 @@ body {
   color: #0ccac4;
   font-family: 'Bigelow Rules';
 }
+
+.search-container{
+  display: flex;
+  width: 85vw;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  margin: 0 auto 40px auto;
+}
+
+.search-item{
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  gap: 20px;
+  margin-right: 25px;
+}
+
+@media(max-width: 600px){
+  .app-title{
+    color: aquamarine;
+    font-size: 48px;
+  }
+}

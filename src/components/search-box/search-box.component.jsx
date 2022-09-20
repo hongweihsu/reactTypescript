@@ -8,7 +8,7 @@ class SearchBox extends Component{
             <div>
                 <input className={`search-box ${this.props.className}`}
                        type='search'
-                       placeholder='search monsters'
+                       placeholder={this.props.className === 'name-search-box'?'search by name':'search by email'}
                        onChange={onSearchChange}>
                 </input>
             </div>
