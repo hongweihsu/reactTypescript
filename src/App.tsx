@@ -1,36 +1,55 @@
-import logo from './logo.svg';
-import {Component} from "react";
+import {ChangeEvent, ChangeEventHandler, Component} from "react";
 import './App.css';
 import CardList from "./components/card-list/card-list.component";
 import SearchBox from "./components/search-box/search-box.component";
-class App extends Component {
-  constructor(props) {
+import {getData} from "./utils/data.utils";
+
+export type Friend = {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  address: {city: string, street: string};
+  company: {name: string};
+}
+
+type AppState = {
+  friends: Friend[];
+  searchField: string;
+  emailSearchField: string;
+  searchType: string;
+};
+
+class App extends Component<any, AppState> {
+  constructor(props:any) {
     super(props);
 
     this.state = {
-      monsters: [],
+      friends: [],
       searchField: '',
       emailSearchField: '',
       searchType: '',
     };
   }
   componentDidMount() {
-    fetch("https://jsonplaceholder.typicode.com/users")
-        .then((response) => response.json())
-        .then((users) => this.setState(() => {
-          return {monsters: users};
-        }));
+    const fetchContact = async () => {
+      await getData<Friend[]>("https://jsonplaceholder.typicode.com/users")
+          .then( contacts => this.setState(()=>{
+        return {friends: contacts}
+      }))
+    }
+    fetchContact();
   }
 
-  onTypeChange = (event) => {
-    let searchType =  document.querySelector('input[name="searchType"]:checked').value
+  onTypeChange = () => {
+    let searchType =  (document.querySelector('input[name="searchType"]:checked')as HTMLInputElement).value
     console.log('ss', searchType)
     this.setState(()=> {
       return {searchType};
     });
   }
 
-  onSearchChange = (event) => {
+  onSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (this.state.searchType === 'name' || this.state.searchType === '') {
       const searchField = event.target.value.toLocaleLowerCase();
       this.setState(() => {
@@ -39,7 +58,7 @@ class App extends Component {
     }
   };
 
-  onEmailSearchChange = (event) => {
+  onEmailSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (this.state.searchType === 'email') {
       const emailSearchField = event.target.value.toLocaleLowerCase();
       this.setState(() => {
@@ -49,16 +68,16 @@ class App extends Component {
   };
 
   render(){
-    const {monsters, searchField, emailSearchField, searchType} = this.state;
+    const {friends, searchField, emailSearchField, searchType} = this.state;
     const {onSearchChange, onEmailSearchChange, onTypeChange} = this;
-    const filteredMonsters = monsters.filter((monster) => {
+    const filteredFriends: Friend[] = friends.filter((friend: Friend) => {
       if (searchType === 'name' || searchType === ''){
-        return monster.name.toLocaleLowerCase().includes(searchField);
+        return friend.name.toLocaleLowerCase().includes(searchField);
       }else if (searchType === 'email'){
-        return monster.email.toLocaleLowerCase().includes(emailSearchField);
+        return friend.email.toLocaleLowerCase().includes(emailSearchField);
       }
     })
-    console.log('fm', filteredMonsters)
+    console.log('fm', filteredFriends)
     return(
         <div className='App'>
           <h1 className='app-title'>Hello Friends</h1>
@@ -73,7 +92,7 @@ class App extends Component {
             </div>
           </div>
 
-          <CardList monsters={filteredMonsters} ></CardList>
+          <CardList friends={filteredFriends} ></CardList>
         </div>
     );
   }

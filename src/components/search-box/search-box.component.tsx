@@ -1,7 +1,13 @@
-import {Component} from "react";
+import {ChangeEventHandler, Component} from "react";
 import './search-box.styles.css';
 
-class SearchBox extends Component{
+
+type SearchBoxProps = {
+    className: string
+    onChange:  ChangeEventHandler<HTMLInputElement>
+}
+
+class SearchBox extends Component<SearchBoxProps>{
     render() {
         const onSearchChange = this.props.onChange
         return (

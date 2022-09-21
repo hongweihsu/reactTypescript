@@ -1,8 +1,18 @@
 import {Component} from "react";
+import {Friend} from "../../App";
 import './card.styles.css'
 
-class Card extends Component{
-    constructor(props) {
+type CardProps = {
+    friend: Friend
+}
+
+type CardState = {
+    showDetail: boolean;
+}
+
+
+class Card extends Component<CardProps, CardState>{
+    constructor(props: any) {
         super(props);
         this.state = {
             showDetail: false
@@ -10,23 +20,22 @@ class Card extends Component{
     }
 
     onShowDetailClick = () => {
-        let showDetail
-        this.state.showDetail === false? showDetail = true : showDetail =false
-        console.log('sd',showDetail)
+        let showDetail: boolean
+        this.state.showDetail? showDetail = false : showDetail =true
         this.setState(()=>{
             return {showDetail};
         });
     }
 
     render() {
-        const {id, name, email, phone, address, company} = this.props.monster;
+        const {id, name, email, phone, address, company} = this.props.friend;
 
-        if (this.state.showDetail === false){
+        if (!this.state.showDetail){
         return (
             <div className='card-container'>
                 <div className='card-content' onClick={this.onShowDetailClick}>
                     <img
-                        alt={`monster ${name}`}
+                        alt={`friend ${name}`}
                         src={`https://robohash.org/${id}&size=100*100`}
                     />
                     <div className='text-info'>
@@ -42,7 +51,7 @@ class Card extends Component{
                     <div className='round-border'>
                     <div className='detail-card-content'>
                         <img
-                            alt={`monster ${name}`}
+                            alt={`friend ${name}`}
                             src={`https://robohash.org/${id}&size=100*100`}
                         />
                         <div className='detail-text-info'>
