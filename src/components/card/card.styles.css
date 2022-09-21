@@ -1,8 +1,6 @@
 .card-container {
     width: 225px;
     background-color: #bca5ec;
-    /*border: 1px solid cornflowerblue;*/
-    /*border: 1px solid grey;*/
     border-radius: 5px;
     padding: 15px;
     cursor: pointer;
@@ -13,7 +11,7 @@
 }
 
 .detail-container {
-    width: 500px;
+    width: 495px;
     background-color: #bca5ec;
     border-radius: 5px;
     padding: 15px;
@@ -116,6 +114,6 @@
     }
 
     .detail-container{
-        width: 61%;
+        width: 60%;
     }
 }
